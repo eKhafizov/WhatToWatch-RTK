@@ -1,5 +1,5 @@
 
-export function ListOfFilms() : JSX.Element {
+export function ListOfGenres() : JSX.Element {
   return (
     <ul className="catalog__genres-list">
       <li className="catalog__genres-item catalog__genres-item--active">

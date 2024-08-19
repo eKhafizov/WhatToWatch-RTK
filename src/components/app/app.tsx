@@ -3,9 +3,7 @@ import { MainPage } from '../pages/mainPage/mainPage';
 //import { SigninPage } from '../pages/signinPage/signinPage';
 //import { PlayerPage } from '../pages/playerPage/playerPage';
 
-
 function App():JSX.Element {
-
   return (
     <MainPage />
     //<FilmPage />
@@ -13,5 +11,4 @@ function App():JSX.Element {
     //<PlayerPage />
   );
 }
-
 export default App;

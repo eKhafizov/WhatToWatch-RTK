@@ -30,7 +30,6 @@ export function FilmPage() : JSX.Element {
             </div>
           </div>
         </div>
-
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
@@ -45,7 +44,6 @@ export function FilmPage() : JSX.Element {
           </div>
         </div>
       </section>
-
       <div className="page-content">
         <MoreBlock />
         <Footer />
