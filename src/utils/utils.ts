@@ -1,5 +1,4 @@
 
-
 export const AppRoutes = {
   MAIN: '/',
   SIGN_IN: '/sign-in',
