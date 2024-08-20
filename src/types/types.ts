@@ -31,6 +31,10 @@ export type CommentType = {
   id: number;
   rating: number;
   comment: string;
+  user: {
+    id: number;
+    name: string;};
+  date: string;
 }
 export type Comments = CommentType[];
 

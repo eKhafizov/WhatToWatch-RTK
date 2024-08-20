@@ -3,9 +3,11 @@ import { ApiRootes } from '../store/const';
 import { CommentType,MoviesArray, MovieType } from '../types/types';
 import { ServerResponse } from 'http';
 import { getToken, dropToken, saveToken } from '../api/token';
+import { getAuth, getUserInfo } from '../store/slices/userActivity/userActivity';
+import { Namespace } from '../utils/utils';
 
 const whatToWatch = createApi({
-  reducerPath: 'whatToWatchReducer',
+  reducerPath: Namespace.apiSlice,
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://13.react.htmlacademy.pro/wtw',
     prepareHeaders: (headers) => {
@@ -18,7 +20,8 @@ const whatToWatch = createApi({
   }),
   tagTypes: ['FILMS'],
   endpoints: (builder) => ({
-    //GETS
+
+    //GET
     getMovies: builder.query<MoviesArray, void>({
       query: () => ApiRootes.Movies
     }),
@@ -31,6 +34,10 @@ const whatToWatch = createApi({
     getComments: builder.query<CommentType[], number>({
       query: (id) => `${ApiRootes.Comments}${id}`
     }),
+    fetchCheckAuth: builder.query<void, undefined>({
+      query: () => ApiRootes.Login
+    }),
+
     //POST
     fetchAddFavorite: builder.mutation<ServerResponse, number>({
       query: (id) => ({
@@ -66,8 +73,8 @@ const whatToWatch = createApi({
       async onQueryStarted({email, password}, {dispatch, queryFulfilled}) {
         const {data: {token}} = await queryFulfilled;
         saveToken(token);
-        //dispatch(getUserInfo(email));
-        //dispatch(getAuth('AUTH'));
+        dispatch(getUserInfo(email));
+        dispatch(getAuth('AUTH'));
       }
     }),
 
@@ -76,10 +83,12 @@ const whatToWatch = createApi({
         url: ApiRootes.Logout,
         method: 'DELETE',
       }),
-      async onQueryStarted(_arg, {dispatch, queryFulfilled}) {
+      async onQueryStarted(_arg, {
+        dispatch,
+        queryFulfilled}) {
         await queryFulfilled;
         dropToken();
-        //dispatch(getAuth('NO_AUTH'));
+        dispatch(getAuth('NO_AUTH'));
       }
     }),
 
@@ -92,6 +101,7 @@ export const {
   useGetFavoritesQuery,
   useGetPromoQuery,
   useGetCommentsQuery,
+  useFetchCheckAuthQuery,
   useFetchAddFavoriteMutation,
   useFetchRemoveFavoriteMutation,
   useFetchAddCommentMutation,

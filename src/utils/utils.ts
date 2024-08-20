@@ -9,7 +9,7 @@ export const AppRoutes = {
 };
 
 export enum Namespace {
-  serverData = 'SERVER_DATA',
+  apiSlice = 'API_SLICE',
   userActivity = 'USER_ACTIVITY'
 }
 
