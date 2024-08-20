@@ -30,7 +30,6 @@ export type MoviesArray = MovieType[];
 export type CommentType = {
   id: number;
   rating: number;
-  date: string;
   comment: string;
 }
 export type Comments = CommentType[];
