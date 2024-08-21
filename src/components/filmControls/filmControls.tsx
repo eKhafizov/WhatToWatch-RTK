@@ -47,8 +47,9 @@ export function FilmControls({filmId} : {filmId: number | undefined}) : JSX.Elem
             auth === AuthorizationStatus.Auth && navigate(AppRoutes.MY_LIST);
           }}
         >
-          { auth === AuthorizationStatus.Auth && favorites && favorites?.length }
-          { auth !== AuthorizationStatus.Auth && (<span onClick={(e) => navigate(AppRoutes.SIGN_IN)}>0</span>) }
+          { auth === AuthorizationStatus.Auth && favorites && (favorites?.length === 0 ? 0 : favorites.length)}
+          { auth === AuthorizationStatus.No_auth && (<span onClick={(e) => navigate(AppRoutes.SIGN_IN)}>0</span>) }
+          { auth === AuthorizationStatus.Unknown && (<span onClick={(e) => navigate(AppRoutes.SIGN_IN)}>0</span>) }
         </span>
       </button>
       <ButtonAddReview

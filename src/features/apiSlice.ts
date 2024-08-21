@@ -81,7 +81,8 @@ const whatToWatch = createApi({
         saveToken(token);
         dispatch(getUserInfo(email));
         dispatch(getAuth('AUTH'));
-      }
+      },
+      invalidatesTags: ['FAVORITES']
     }),
 
     fetchLogoutAuth: builder.mutation<void, void>({
@@ -95,7 +96,8 @@ const whatToWatch = createApi({
         await queryFulfilled;
         dropToken();
         dispatch(getAuth('NO_AUTH'));
-      }
+      },
+      invalidatesTags: ['FAVORITES']
     }),
 
   })
