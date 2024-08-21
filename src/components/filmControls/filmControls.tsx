@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../../utils/utils';
 import ButtonAddReview from './styled';
 import { useFetchAddFavoriteMutation, useFetchRemoveFavoriteMutation, useGetFavoritesQuery } from '../../features/apiSlice';
-import { useAppSelector } from '../../store/utils';
+import { useAppDispatch, useAppSelector } from '../../store/utils';
 import { AuthorizationStatus } from '../../store/const';
-
+import { changeTab } from '../../store/slices/userActivity/userActivity';
 
 export function FilmControls({filmId} : {filmId: number | undefined}) : JSX.Element {
   const navigate = useNavigate();
@@ -13,6 +13,8 @@ export function FilmControls({filmId} : {filmId: number | undefined}) : JSX.Elem
   const [removeFavorite] = useFetchRemoveFavoriteMutation();
   const isFavorite = favorites?.find((item) => item.id === filmId);
   const auth = useAppSelector((state) => state.USER_ACTIVITY.auth);
+  const pathname = useLocation();
+  const dispatch = useAppDispatch();
 
   return (
     <div className="film-card__buttons">
@@ -39,9 +41,24 @@ export function FilmControls({filmId} : {filmId: number | undefined}) : JSX.Elem
           <use xlinkHref="#add"></use>
         </svg>
         <span>My list</span>
-        <span className="film-card__count" onClick={(e) => auth === AuthorizationStatus.Auth && navigate(AppRoutes.MY_LIST)}>{favorites ? favorites?.length : 0}</span>
+        <span
+          className="film-card__count"
+          onClick={(e) => {
+            auth === AuthorizationStatus.Auth && navigate(AppRoutes.MY_LIST);
+          }}
+        >
+          { auth === AuthorizationStatus.Auth && favorites && favorites?.length }
+          { auth !== AuthorizationStatus.Auth && (<span onClick={(e) => navigate(AppRoutes.SIGN_IN)}>0</span>) }
+        </span>
       </button>
-      <ButtonAddReview className="btn film-card__button" >Add review</ButtonAddReview>
+      <ButtonAddReview
+        className="btn film-card__button"
+        onClick={(e) => {
+          pathname.pathname === AppRoutes.MAIN && filmId !== undefined && dispatch(changeTab(2)) && navigate(`${AppRoutes.MOVIE_PAGE}${filmId}`);
+          pathname.pathname === AppRoutes.MOVIE_PAGE && filmId !== undefined && dispatch(changeTab(2));
+        }}
+      >Add review
+      </ButtonAddReview>
     </div>
   );
 }

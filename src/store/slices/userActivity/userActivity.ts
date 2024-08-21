@@ -9,6 +9,7 @@ type InitialStateType = {
   auth: string;
   chosenMovie: MovieType | null;
   chosenGenre: string;
+  tab: number;
 };
 
 const initialState : InitialStateType = {
@@ -16,6 +17,7 @@ const initialState : InitialStateType = {
   auth: AuthorizationStatus.Unknown,
   chosenMovie: null,
   chosenGenre: Genres.allgenres,
+  tab: 0,
 };
 
 const userActivity = createSlice({
@@ -33,9 +35,12 @@ const userActivity = createSlice({
     },
     getUserInfo: (state, action: {payload: string}) => {
       state.user = action.payload;
-    }
+    },
+    changeTab: (state, action : {payload: number}) => {
+      state.tab = action.payload;
+    },
   },
 });
 
-export const {changeChosenGenre, changeChosenMovie, getAuth, getUserInfo} = userActivity.actions;
+export const {changeChosenGenre, changeChosenMovie, getAuth, getUserInfo, changeTab} = userActivity.actions;
 export default userActivity;

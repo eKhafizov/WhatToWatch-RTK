@@ -12,7 +12,7 @@ export function FilmCard({film} : {film: MovieType}) : JSX.Element {
         <Link
           className="small-film-card__link"
           to={`${AppRoutes.MOVIE_PAGE}${film.id}`}
-        >Fantastic Beasts: The Crimes of Grindelwald
+        >{film.name}
         </Link>
       </h3>
     </article>

@@ -9,7 +9,6 @@ function ReviewForm({id} : {id: number}) : JSX.Element {
 
   const [addComment] = useFetchAddCommentMutation();
 
-
   const [form, setForm] = useState({
     comment: '',
     rating: 1,

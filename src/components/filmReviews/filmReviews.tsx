@@ -1,9 +1,12 @@
 import { useGetCommentsQuery } from '../../features/apiSlice';
+import { AuthorizationStatus } from '../../store/const';
+import { useAppSelector } from '../../store/utils';
 import ReviewForm from '../reviewForm/reviewForm';
 
 export function FilmReviews({id} : {id: number}) : JSX.Element {
 
   const {data} = useGetCommentsQuery(id);
+  const auth = useAppSelector((state) => state.USER_ACTIVITY.auth);
 
   return (
     <>
@@ -25,8 +28,7 @@ export function FilmReviews({id} : {id: number}) : JSX.Element {
           }
         </div>
       </div>
-
-      <ReviewForm id={id} />
+      { auth === AuthorizationStatus.Auth && (<ReviewForm id={id} />) }
     </>
   );
 }
