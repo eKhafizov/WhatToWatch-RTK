@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { ApiRootes } from '../store/const';
-import { CommentType,MoviesArray, MovieType } from '../types/types';
+import { CommentType,CommentTypeForm,MoviesArray, MovieType } from '../types/types';
 import { ServerResponse } from 'http';
 import { getToken, dropToken, saveToken } from '../api/token';
 import { getAuth, getUserInfo } from '../store/slices/userActivity/userActivity';
@@ -18,21 +18,24 @@ const whatToWatch = createApi({
       return headers;
     }
   }),
-  tagTypes: ['FILMS'],
+  tagTypes: ['MOVIES', 'COMMENTS', 'FAVORITES'],
   endpoints: (builder) => ({
 
     //GET
     getMovies: builder.query<MoviesArray, void>({
-      query: () => ApiRootes.Movies
+      query: () => ApiRootes.Movies,
+      providesTags: ['MOVIES'],
     }),
     getPromo: builder.query<MovieType, void>({
       query: () => ApiRootes.Promo
     }),
     getFavorites: builder.query<MoviesArray, void>({
-      query: () => ApiRootes.Favorite
+      query: () => ApiRootes.Favorite,
+      providesTags: ['FAVORITES'],
     }),
     getComments: builder.query<CommentType[], number>({
-      query: (id) => `${ApiRootes.Comments}${id}`
+      query: (id) => `${ApiRootes.Comments}${id}`,
+      providesTags: ['COMMENTS'],
     }),
     fetchCheckAuth: builder.query<void, undefined>({
       query: () => ApiRootes.Login
@@ -44,21 +47,24 @@ const whatToWatch = createApi({
         url: `${ApiRootes.Favorite}/${id}/1`,
         method: 'POST',
         body: id
-      })
+      }),
+      invalidatesTags: ['FAVORITES']
     }),
     fetchRemoveFavorite: builder.mutation<ServerResponse, number>({
       query: (id) => ({
         url: `${ApiRootes.Favorite}/${id}/0`,
         method: 'POST',
         body: id
-      })
+      }),
+      invalidatesTags: ['FAVORITES']
     }),
-    fetchAddComment: builder.mutation<CommentType, {rating: number; comment: string; id: number}>({
-      query: (commentObject : CommentType) => ({
+    fetchAddComment: builder.mutation<{rating: number; comment: string; id: number}, {rating: number; comment: string}>({
+      query: (commentObject : CommentTypeForm) => ({
         url: `${ApiRootes.Comments}${commentObject.id}`,
         method: 'POST',
-        body: commentObject
-      })
+        body: {rating: commentObject.rating, comment: commentObject.comment }
+      }),
+      invalidatesTags: ['COMMENTS']
     }),
 
     fetchLoginAuth: builder.mutation<

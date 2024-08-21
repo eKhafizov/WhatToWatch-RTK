@@ -19,18 +19,15 @@ export function MainPage() : JSX.Element {
         <Header />
         <PromoBlock />
       </section>
-
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <ListOfGenres />
-
           <div className="catalog__films-list">
             {
               data !== undefined && data.map((film) => (<FilmCard key={film.id} film={film} />))
             }
           </div>
-
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>

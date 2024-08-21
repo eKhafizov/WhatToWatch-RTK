@@ -16,7 +16,7 @@ export function FilmReviews({id} : {id: number}) : JSX.Element {
                   <p className="review__text">{comment.comment}</p>
                   <footer className="review__details">
                     <cite className="review__author">{comment.user.name}</cite>
-                    <time className="review__date" dateTime={comment.date} >{comment.date}</time>
+                    <time className="review__date" dateTime={(comment.date).toString()} >{comment.date.toString()}</time>
                   </footer>
                 </blockquote>
                 <div className="review__rating">{comment.rating}</div>
@@ -26,7 +26,7 @@ export function FilmReviews({id} : {id: number}) : JSX.Element {
         </div>
       </div>
 
-      <ReviewForm />
+      <ReviewForm id={id} />
     </>
   );
 }

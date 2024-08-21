@@ -1,10 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+import { AppRoutes } from '../../../utils/utils';
 
 export function PlayerPage() : JSX.Element {
+  const navigate = useNavigate();
+
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={(e) => navigate(AppRoutes.MAIN)}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">

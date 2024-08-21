@@ -35,7 +35,7 @@ export function FilmPage() : JSX.Element {
                 <span className="film-card__genre">{film?.genre}</span>
                 <span className="film-card__year">{film?.released}</span>
               </p>
-              <FilmControls />
+              <FilmControls filmId={film?.id} />
             </div>
           </div>
         </div>

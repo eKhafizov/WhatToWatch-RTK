@@ -34,9 +34,14 @@ export type CommentType = {
   user: {
     id: number;
     name: string;};
-  date: string;
+  date: Date;
 }
 export type Comments = CommentType[];
+export type CommentTypeForm = {
+  rating: number;
+  comment: string;
+  id: number;
+}
 
 export type Login = {
   password: string;
