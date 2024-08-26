@@ -20,7 +20,7 @@ function App():JSX.Element {
   const searchGenre = searchParams.get('genre');
   useEffect(() => {
     searchGenre !== null && searchGenre !== undefined && dispatch(changeChosenGenre(searchGenre));
-  }, []);
+  }, [dispatch, searchGenre]);
 
   return (
     <Routes>
